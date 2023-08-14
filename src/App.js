@@ -33,21 +33,21 @@ function reducer(state, action) {
         ...state,
         isActive: true
       }
-    case 'deposit 150':
+    case 'deposit':
       return {
         ...state,
-        balance: state.balance + 150
+        balance: state.balance + action.payload
       }
-    case 'withdraw 50':
+    case 'withdraw':
       return {
         ...state,
-        balance: state.balance >= 50 ? state.balance - 50 : state.balance
+        balance: state.balance >= action.payload ? state.balance - action.payload : state.balance
       }
     case 'requestLoan':
       return {
         ...state,
-        balance: state.loanRequested ? state.balance : state.balance + 5000,
-        loan: 5000,
+        balance: state.loanRequested ? state.balance : state.balance + action.payload,
+        loan: action.payload,
         loanRequested: true
       }
     case 'payLoan':
@@ -87,17 +87,17 @@ export default function App() {
         </button>
       </p>
       <p>
-        <button onClick={() => dispatch({ type: 'deposit 150' })} disabled={!isActive}>
+        <button onClick={() => dispatch({ type: 'deposit', payload: 150 })} disabled={!isActive}>
           Deposit 150
         </button>
       </p>
       <p>
-        <button onClick={() => dispatch({ type: 'withdraw 50' })} disabled={!isActive}>
+        <button onClick={() => dispatch({ type: 'withdraw', payload: 50 })} disabled={!isActive}>
           Withdraw 50
         </button>
       </p>
       <p>
-        <button onClick={() => dispatch({ type: 'requestLoan' })} disabled={isActive ? loanRequested ? true : false : true}>
+        <button onClick={() => dispatch({ type: 'requestLoan', payload: 5000 })} disabled={isActive ? loanRequested ? true : false : true}>
           Request a loan of 5000
         </button>
       </p>
